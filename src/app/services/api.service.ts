@@ -13,7 +13,11 @@ export class ApiService {
   }
 
   // get product details by id api
-  getAllProductsByIdApi(productId:any){
+  getAllProductsByIdApi(productId: any) {
     return this.http.get(`${this.server_url}/get-product/${productId}`)
+  }
+  // user register
+  userRegisterApi(data: any) {
+    return this.http.post(`${this.server_url}/user-register`, data)
   }
 }
