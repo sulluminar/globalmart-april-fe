@@ -6,15 +6,24 @@
                 <i class="fa-solid fa-user fa-2x text-danger"></i>
             </div>
             <h2 class="text-center text-danger d-flex">Welcome User</h2>
-            <form class="border rounded p-3 w-100 shadow mt-3">
+            <form class="border rounded p-3 w-100 shadow mt-3" [formGroup]="loginForm" (ngSubmit)="login()">
                 <div class="mb-4 mt-3">
-                    <input type="text" placeholder="Enter Email" class="form-control">
+                    <input type="text" placeholder="Enter Email" class="form-control"
+                    formControlName="email"  name="email">
+                    <span class="text-danger" *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched">
+                        Invalid Email
+                    </span>
                 </div>
                 <div class="mb-4">
-                    <input type="text" placeholder="Enter Password" class="form-control">
+                    <input type="text" placeholder="Enter Password" class="form-control"
+                    formControlName="password" name="password"
+                    >
+                    <span class="text-danger" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+                        Invalid Password
+                    </span>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-danger w-100">LOGIN</button>
+                    <button class="btn btn-danger w-100" type="submit" [disabled]="loginForm.invalid">LOGIN</button>
                 </div>
             </form>
         </div>

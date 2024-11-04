@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-all-product',
@@ -23,10 +24,20 @@ export class AllProductComponent implements OnInit {
     })
   }
 
-  addToWishList(product:any){
-    alert(product)
+  addToWishList(product: any) {
+    if(sessionStorage.getItem("token")){
+      alert("inside")
+      // add item to wishlist
+    }
+    else{
+      Swal.fire({
+        title: 'Warning',
+        text: `Please Login`,
+        icon: 'warning',
+      });
+    }
   }
-  addToCart(product:any){
+  addToCart(product: any) {
     alert(product)
   }
 }

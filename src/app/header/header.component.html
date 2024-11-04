@@ -16,8 +16,12 @@
                         <button class="btn btn-outline-light"> <i
                                 class="fa-solid fa-cart-shopping fa-beat me-2"></i>Cart <span class="badge text-bg-secondary ms-1">4</span></button>
                     </a>
-                    <a class="nav-link" routerLink="user/login">
+                    <a class="nav-link" routerLink="user/login" *ngIf="!loginUserName">
                         <button class="btn btn-outline-light"><i class="fa-solid fa-user"></i></button>
+                    </a>
+                    <a class="nav-link" (click)="logout()" *ngIf="loginUserName">
+                        <button class="btn btn-outline-light"><i class="fa-solid fa-power-off"></i></button>
+                        <span class="text-light ms-2 fw-bold">{{loginUserName | uppercase}}</span>
                     </a>
                 </div>
             </div>
