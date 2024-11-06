@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,26 @@ export class ApiService {
     let headers = new HttpHeaders();
     const token = sessionStorage.getItem("token");
     if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
+      headers = headers.append('Authorization', `Bearer ${token}`)
     }
     return { headers }
+  }
+
+  // get all wishlist items
+  getAllWishListItemApi() {
+    return this.http.get(`${this.server_url}/allwishlistitems`, this.addTokenToHeader())
+  }
+
+  // delete wishlist item
+  deleteWishListItem(id: any) {
+    return this.http.delete(`${this.server_url}/wishlist/removeItem/${id}`, this.addTokenToHeader())
+  }
+  // cretae a behaviour subject to share data between components
+  wishlistCount = new BehaviorSubject(0);
+
+  getWishlistCount() {
+    this.getAllWishListItemApi().subscribe((res: any) => {
+      this.wishlistCount.next(res.length)
+    })
   }
 }

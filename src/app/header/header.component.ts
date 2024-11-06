@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router:Router){}
+  constructor(private router: Router, private apiService: ApiService) { }
   loginUserName: any = "";
+  wishListCount = 0;
   ngOnInit(): void {
     if (sessionStorage.getItem("username")) {
-      this.loginUserName = sessionStorage.getItem('username')
+      this.apiService.getWishlistCount();
+      this.loginUserName = sessionStorage.getItem('username');
+      this.apiService.wishlistCount.subscribe((res: any) => {
+        this.wishListCount = res
+      })
     }
     else {
       this.loginUserName = "";

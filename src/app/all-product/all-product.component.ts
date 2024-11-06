@@ -26,8 +26,27 @@ export class AllProductComponent implements OnInit {
 
   addToWishList(product: any) {
     if(sessionStorage.getItem("token")){
-      alert("inside")
       // add item to wishlist
+      this.apiService.addToWishList(product).subscribe({
+        next:(res:any)=>{
+          console.log("===add to wishlist resp===");
+          console.log(res);
+          this.apiService.getWishlistCount()
+          Swal.fire({
+            title: 'Success',
+            text: `Successfully added to wishlist`,
+            icon: 'success',
+          });
+        },
+        error:(res:any)=>{
+          console.log(res);
+          Swal.fire({
+            title: 'Warning',
+            text: `${res.error}`,
+            icon: 'warning',
+          });
+        }
+      })
     }
     else{
       Swal.fire({
