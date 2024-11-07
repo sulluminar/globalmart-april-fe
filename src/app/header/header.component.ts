@@ -11,12 +11,17 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) { }
   loginUserName: any = "";
   wishListCount = 0;
+  cartCount:any;
   ngOnInit(): void {
     if (sessionStorage.getItem("username")) {
       this.apiService.getWishlistCount();
       this.loginUserName = sessionStorage.getItem('username');
       this.apiService.wishlistCount.subscribe((res: any) => {
         this.wishListCount = res
+      })
+      this.apiService.getCartCount();
+      this.apiService.cartCount.subscribe((res)=>{
+        this.cartCount = res;
       })
     }
     else {

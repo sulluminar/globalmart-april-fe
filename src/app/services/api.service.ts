@@ -52,10 +52,24 @@ export class ApiService {
   }
   // cretae a behaviour subject to share data between components
   wishlistCount = new BehaviorSubject(0);
-
   getWishlistCount() {
     this.getAllWishListItemApi().subscribe((res: any) => {
       this.wishlistCount.next(res.length)
+    })
+  }
+
+  addToCart(data: any) {
+    return this.http.post(`${this.server_url}/add-cart`, data, this.addTokenToHeader())
+  }
+
+  getAllCartItemsApi() {
+    return this.http.get(`${this.server_url}/allCartitems`, this.addTokenToHeader())
+  }
+  // create a behaviour subject to update cart count
+  cartCount = new BehaviorSubject(0)
+  getCartCount() {
+    this.getAllCartItemsApi().subscribe((res: any) => {
+      this.cartCount.next(res.length)
     })
   }
 }

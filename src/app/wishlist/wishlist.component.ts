@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-wishlist',
@@ -34,6 +35,27 @@ export class WishlistComponent implements OnInit {
         console.log(res)
       }
     })
+  }
+  addTocartItem(data:any){
+    Object.assign(data,{quantity:1})
+    this.apiService.addToCart(data).subscribe({
+      next:(res)=>{
+        Swal.fire({
+          title: 'Success',
+          text: `Successfully added to wishlist`,
+          icon: 'success',
+        });
+        this.deleteWishlistItem(data._id);
+        this.apiService.getCartCount();
+      },
+      error:(res)=>{
+        Swal.fire({
+          title: 'Error',
+          text: `${res}`,
+          icon: 'error',
+        });
+      }
 
+    })
   }
 }

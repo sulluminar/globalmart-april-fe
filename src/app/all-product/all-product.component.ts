@@ -25,10 +25,10 @@ export class AllProductComponent implements OnInit {
   }
 
   addToWishList(product: any) {
-    if(sessionStorage.getItem("token")){
+    if (sessionStorage.getItem("token")) {
       // add item to wishlist
       this.apiService.addToWishList(product).subscribe({
-        next:(res:any)=>{
+        next: (res: any) => {
           console.log("===add to wishlist resp===");
           console.log(res);
           this.apiService.getWishlistCount()
@@ -38,8 +38,38 @@ export class AllProductComponent implements OnInit {
             icon: 'success',
           });
         },
-        error:(res:any)=>{
+        error: (res: any) => {
           console.log(res);
+          Swal.fire({
+            title: 'Warning',
+            text: `${res.error}`,
+            icon: 'warning',
+          });
+        }
+      })
+    }
+    else {
+      Swal.fire({
+        title: 'Warning',
+        text: `Please Login`,
+        icon: 'warning',
+      });
+    }
+  }
+  
+  addToCart(product: any) {
+    if (sessionStorage.getItem('token')) {
+     Object.assign(product,{quantity:1})
+      this.apiService.addToCart(product).subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: 'Success',
+            text: `Successfully added to cart`,
+            icon: 'success',
+          });
+          this.apiService.getCartCount();
+        },
+        error: (res) => {
           Swal.fire({
             title: 'Warning',
             text: `${res.error}`,
@@ -55,8 +85,6 @@ export class AllProductComponent implements OnInit {
         icon: 'warning',
       });
     }
-  }
-  addToCart(product: any) {
-    alert(product)
+
   }
 }
