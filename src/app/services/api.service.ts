@@ -72,4 +72,21 @@ export class ApiService {
       this.cartCount.next(res.length)
     })
   }
+
+  icrementItemApi(id: any) {
+    return this.http.get(`${this.server_url}/cart/increment/${id}`, this.addTokenToHeader())
+  }
+
+  decrementItemApi(id: any) {
+    return this.http.get(`${this.server_url}/cart/decrement/${id}`, this.addTokenToHeader())
+  }
+
+  emptyCartApi() {
+    return this.http.delete(`${this.server_url}/empty-cart`, this.addTokenToHeader())
+  }
+
+  removeItemApi(id: any) {
+    return this.http.delete(`${this.server_url}/cart/deleteone/${id}`, this.addTokenToHeader())
+  }
+
 }
